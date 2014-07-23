@@ -44,7 +44,7 @@ makefile = pyqtconfig.QtGuiModuleMakefile(
 # ".dll" extension on Windows).
 makefile.extra_libs = ["fakevim"]
 
-makefile.LFLAGS.append("-L../../build/fakevim")
+makefile.LFLAGS.append("-L../../fakevim")
 makefile.CXXFLAGS.append("-I../..")
 
 # Generate the Makefile itself.

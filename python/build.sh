@@ -16,6 +16,6 @@ make
 
 # test
 export PYTHONPATH=$PWD
-export LD_LIBRARY_PATH=$PWD/../../build/fakevim:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$PWD/../../fakevim:$LD_LIBRARY_PATH
 ../test.py
 
