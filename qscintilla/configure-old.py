@@ -85,7 +85,7 @@ def create_optparser():
         setattr(parser.values, option.dest, os.path.abspath(value))
 
     p = optparse.OptionParser(usage="python %prog [options]",
-            version="None")
+            version=None)
 
     p.add_option("-a", "--apidir", action="callback", default=None,
             type="string", metavar="DIR", dest="fakevimdir",
@@ -171,6 +171,11 @@ def inform_user():
         sipconfig.inform("The FakeVim module is being built with 'protected' redefined as 'public'.")
 
 
+def check_fakevim():
+    """See if FakeVim can be found and what its version is.
+    """
+
+
 def sip_flags():
     """Return the SIP flags.
     """
@@ -231,11 +236,10 @@ def generate_code():
     argv.append("-b")
     argv.append(buildfile)
 
-    #if pyqt.pyqt_version >= 0x040000:
-        #argv.append("sip/fakevimmod4.sip")
-    #else:
-        #argv.append("sip/fakevimmod3.sip")
-    argv.append("sip/fakevim.sip")
+    if pyqt.pyqt_version >= 0x040000:
+        argv.append("sip/fakevim.sip")
+    else:
+        argv.append("sip/fakevim.sip")
 
     os.system(" ".join(argv))
 
@@ -372,6 +376,9 @@ def main(argv):
     if opts.fakevimdir is None:
         opts.fakevimdir = os.path.join(qt_data_dir, "fakevim")
 
+    # Check for FakeVim.
+    check_fakevim()
+
     # Tell the user what's been found.
     inform_user()
 
@@ -391,6 +398,6 @@ if __name__ == "__main__":
     except:
         sys.stderr.write(
 """An internal error occured.  Please report all the output from the program,
-including the following traceback, to support@riverbankcomputing.com.
+including the following traceback, to .
 """)
         raise

@@ -64,7 +64,7 @@ class ModuleConfiguration(object):
 
     # The version of the module as a string.  Set it to None if you don't
     # provide version information.
-    version = 'None'
+    version=None
 
     # Set if a configuration script is provided that handles versions of PyQt4
     # prior to v4.10 (i.e. versions where the pyqtconfig.py module is
@@ -189,21 +189,6 @@ class ModuleConfiguration(object):
         configuration.
         """
 
-        # Find the FakeVim header files.
-        inc_dir = target_configuration.fakevim_inc_dir
-        if inc_dir is None:
-            inc_dir = target_configuration.qt_inc_dir
-
-        lib_dir = target_configuration.fakevim_lib_dir
-        if lib_dir is None:
-            lib_dir = target_configuration.qt_lib_dir
-
-        if not glob.glob(os.path.join(lib_dir, '*fakevim*')):
-            error(
-                    "The FakeVim library could not be found in %s. If "
-                    "FakeVim is installed then use the --fakevim-libdir "
-                    "argument to explicitly specify the correct "
-                    "directory." % lib_dir)
 
     def inform_user(self, target_configuration):
         """ Inform the user about module specific configuration information.
@@ -237,7 +222,6 @@ class ModuleConfiguration(object):
         the target configuration.
         """
 
-        #return 'sip/fakevimmod5.sip' if target_configuration.pyqt_package == 'PyQt5' else 'sip/fakevimmod4.sip'
         return 'sip/fakevim.sip'
 
     def get_sip_installs(self, target_configuration):
@@ -1493,7 +1477,6 @@ def _run_command(cmd, verbose):
         if verbose:
             if sys.hexversion >= 0x03000000:
                 sys.stdout.write(str(lout, encoding=sys.stdout.encoding))
-                inform("hello")
             else:
                 sys.stdout.write(lout)
 
