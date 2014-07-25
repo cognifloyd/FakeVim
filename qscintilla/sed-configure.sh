@@ -1,3 +1,4 @@
+#!/bin/bash
 # copy QScintilla's Python/configure*.py into this folder before running this
 
 sed -i \
