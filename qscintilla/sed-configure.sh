@@ -8,7 +8,7 @@ sed -i \
 	-e 's/Qsci/FakeVim/g' \
 	-e 's/qsci/fakevim/g' \
 	-e 's/_API_MAJOR = 11/_API_MAJOR = 0/g' \
-	-e 's/version *= *..\..\.../version=None/' \
+	-e "s/version *= *['\"].\..\..*['\"]/version=None/" \
 	-e "s/minimum_sip_version *= *'.\...'/minimum_sip_version = '4.15'/" \
 	-e "s/support@riverbankcomputing.com//" \
 	-e "s/protected_is_public_is_supported = True/protected_is_public_is_supported = False/" \

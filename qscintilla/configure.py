@@ -23,7 +23,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-# This is v1.1 of this boilerplate.
+# This is v1.2 of this boilerplate.
 
 
 import sys
@@ -747,6 +747,8 @@ class _TargetConfiguration:
         self.py_pylib_dir = parser.get(section, 'py_pylib_dir',
                 self.py_pylib_dir)
 
+        self.sip_inc_dir = self.py_inc_dir
+
         self.module_dir = parser.get(section, 'module_dir', self.module_dir)
 
         if self.pyqt_package is not None:
@@ -860,6 +862,7 @@ class _TargetConfiguration:
             self.py_pylib_dir = self._apply_sysroot(self.py_pylib_dir)
             self.py_sip_dir = self._apply_sysroot(self.py_sip_dir)
             self.module_dir = self._apply_sysroot(self.module_dir)
+            self.sip_inc_dir = self._apply_sysroot(self.sip_inc_dir)
 
     def _apply_sysroot(self, dir_name):
         """ Replace any leading sys.prefix of a directory name with sysroot.
@@ -915,7 +918,7 @@ class _TargetConfiguration:
                 self.qmake_spec = 'macx-g++'
 
         self.qt_version_str = getattr(qt_config, 'QT_VERSION', '')
-        self.api_dir = qt_config.QT_INSTALL_DATA
+        self.api_dir = os.path.join(qt_config.QT_INSTALL_DATA, 'fakevim')
         self.qt_inc_dir = qt_config.QT_INSTALL_HEADERS
         self.qt_lib_dir = qt_config.QT_INSTALL_LIBS
 
@@ -1281,6 +1284,9 @@ def _generate_pro(target_config, opts, module_config):
     config = qmake_config.get('CONFIG')
     if config:
         pro.write('CONFIG += %s\n' % config)
+
+    # Work around QTBUG-39300.
+    pro.write('CONFIG -= android_install\n')
 
     qt5_qmake_config = _get_qt_qmake_config(qmake_config, 'Qt5')
     qt4_qmake_config = _get_qt_qmake_config(qmake_config, 'Qt4')

@@ -32,5 +32,5 @@ export PYTHONPATH=$PWD
 echo "PYTHONPATH=$PYTHONPATH"
 export LD_LIBRARY_PATH=$PWD/../../fakevim:$LD_LIBRARY_PATH
 echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-../test.py
+$PYTHON ../test.py
 
